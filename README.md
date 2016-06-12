@@ -1,6 +1,6 @@
-# Make Changes to Git Repository
+# GitPython Examples
 
-Scripts showing examples of how to programmatically make changes to git repositories, including
+GitPython example scripts showing how to programmatically make changes to git repositories, including
 the following types:
 
 - creating a repository with a set of changes on random dates between a start and an end
