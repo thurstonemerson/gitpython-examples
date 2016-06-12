@@ -10,8 +10,6 @@ from random import randint
 from utils import copytree
 import git
 
-
-
 class AddChanges:
 
     def __init__(self, first_date=date.today(),
@@ -36,7 +34,6 @@ class AddChanges:
             print("The change file directory is {0}".format(change_file_dir))
             with open(os.path.join(change_file_dir, "commit-message.txt")) as f:
                 message = f.read()
-#            changes.append((message, change_files))
             changes.append((message, change_file_dir))
              
         print(changes)
@@ -73,24 +70,18 @@ class AddChanges:
             
         return [datetime.combine(d, self._get_random_time()) for d in dates]
 
-    def make_me_a_rockstar(self):
-        print('Making you a Rockstar Programmer')
+    def make_changes(self):
+        print('Making changes')
         self.repo = git.Repo(self.repo_path + "\\algorithms")
            
         dates = self._get_dates_list()
         dates.sort()
         for commit_date in dates:
             self._edit_and_commit(commit_date, *self.changes.pop(0))
-        print('\nYou are now a Rockstar Programmer!')
+        print('\nCompleted making changes!')
 
-
-# @click.command()
-# @click.option('--days', type=int, default=400)
-# def cli(days):
-#     magic = RockStar(days=days)
-#     magic.make_me_a_rockstar()
     
 if __name__ == '__main__':
     magic = AddChanges(number_of_changes=4, first_date=datetime.strptime('10 Jun 2016', '%d %b %Y'),
                      last_date=datetime.strptime('13 Jun 2016', '%d %b %Y'))
-    magic.make_me_a_rockstar()
+    magic.make_changes()
