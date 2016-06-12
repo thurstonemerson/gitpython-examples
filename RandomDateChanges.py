@@ -86,7 +86,7 @@ class RandomDateChanges:
 
     
 if __name__ == '__main__':
-    magic = RandomDateChanges(number_of_changes=273, first_date=datetime.strptime('08 Sep 2015', '%d %b %Y'),
+    magic = RandomDateChanges(number_of_changes=3, first_date=datetime.strptime('08 Sep 2015', '%d %b %Y'),
                      last_date=datetime.strptime('12 May 2016', '%d %b %Y'))
     magic.make_changes()
     
