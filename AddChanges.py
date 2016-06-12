@@ -14,7 +14,7 @@ class AddChanges:
 
     def __init__(self, first_date=date.today(),
                 last_date=date.today(), change_directory="changes",
-                 number_of_changes=1):
+                 number_of_changes=1, project_name):
         self.first_date = first_date
         self.last_date = last_date
         self.number_of_changes = number_of_changes
@@ -22,9 +22,10 @@ class AddChanges:
         self.change_directory = change_directory
         self.changes_file_path = os.path.join(os.path.dirname(
             os.path.abspath(__file__)), self.change_directory)
-
+        self.project_name = project_name
         self.changes = self._load_changes()
         
+    '''Load a set of commit messages'''
     def _load_changes(self):
         
         changes = []
@@ -39,11 +40,12 @@ class AddChanges:
         print(changes)
         return changes     
             
+    '''For a specified date, add a set of changes to a git repository'''
     def _edit_and_commit(self, commit_date, message, change_file_dir):
         #for every file in the change directory, copy to the new place
         print("copytree {0} {1}".format(change_file_dir, os.getcwd()))
      
-        new_files = copytree(change_file_dir, os.getcwd() + "\\algorithms")
+        new_files = copytree(change_file_dir, os.getcwd() + self.project_name)
         
         new_files = [file for file in new_files if not file.endswith("commit-message.txt")]
         
@@ -59,6 +61,7 @@ class AddChanges:
         return time(hour=randint(0, 23), minute=randint(0, 59),
                     second=randint(0, 59), microsecond=randint(0, 999999))
 
+    '''Get a list of dates from start date to end date, one day at a time'''
     def _get_dates_list(self):
         dates = []
         day_num = 0
@@ -70,9 +73,10 @@ class AddChanges:
             
         return [datetime.combine(d, self._get_random_time()) for d in dates]
 
+    '''From the start date, make the required changes one day at a time'''
     def make_changes(self):
         print('Making changes')
-        self.repo = git.Repo(self.repo_path + "\\algorithms")
+        self.repo = git.Repo(self.repo_path + self.project_name)
            
         dates = self._get_dates_list()
         dates.sort()
@@ -83,5 +87,5 @@ class AddChanges:
     
 if __name__ == '__main__':
     magic = AddChanges(number_of_changes=4, first_date=datetime.strptime('10 Jun 2016', '%d %b %Y'),
-                     last_date=datetime.strptime('13 Jun 2016', '%d %b %Y'))
+                     last_date=datetime.strptime('13 Jun 2016', '%d %b %Y'), project_name = "\\proj")
     magic.make_changes()
